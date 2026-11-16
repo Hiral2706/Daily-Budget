@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Import handled via index.html <link> for performance ── */
+
+/* ── Smooth scrolling + box sizing reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  @apply bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-50;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ── Safe area for notched phones ── */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* ── Scrollbar styling ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { @apply bg-transparent; }
+::-webkit-scrollbar-thumb { @apply bg-primary-300 dark:bg-primary-700 rounded-full; }
+
+/* ── Custom components ── */
+@layer components {
+  .card {
+    @apply bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-4;
+  }
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 active:scale-95 text-white font-semibold rounded-2xl px-6 py-3
+           transition-all duration-150 shadow-md shadow-primary-200 dark:shadow-primary-900;
+  }
+  .btn-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200
+           font-semibold rounded-2xl px-6 py-3 transition-all duration-150 active:scale-95;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800
+           text-gray-900 dark:text-gray-100 px-4 py-3 text-base outline-none
+           focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all duration-150
+           placeholder:text-gray-400 dark:placeholder:text-gray-500;
+  }
+  .label {
+    @apply text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 block;
+  }
+  .page-container {
+    @apply max-w-md mx-auto px-4 py-6 pb-28 min-h-screen;
+  }
+  .gradient-card {
+    @apply bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl p-5 text-white shadow-lg shadow-primary-200 dark:shadow-primary-900;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium;
+  }
+  .bottom-sheet {
+    @apply fixed inset-x-0 bottom-0 bg-white dark:bg-gray-900 rounded-t-3xl shadow-2xl border-t border-gray-100 dark:border-gray-800 z-50 animate-slide-up;
+  }
+}
+
+/* ── Progress bar animation ── */
+@keyframes progressFill {
+  from { width: 0%; }
+  to   { width: var(--progress-width); }
+}
+
+.progress-bar-animated {
+  animation: progressFill 0.8s ease-out forwards;
+}
+
+/* ── Ripple effect ── */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+.ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.ripple:active::after {
+  opacity: 0.1;
+}
+
+/* ── Number animation ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.count-up {
+  animation: countUp 0.4s ease-out;
+}
+
+/* ── Modal overlay ── */
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-40;
+  animation: fadeIn 0.2s ease-out;
+}
